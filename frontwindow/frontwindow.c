@@ -1,10 +1,11 @@
 // frontwindow.c
 #include <stdlib.h>
 #include <string.h>
-#include <dlfcn.h>
 
 #ifdef _WIN32
 #include <windows.h>
+#else
+#include <dlfcn.h>
 #endif
 
 #ifdef __APPLE__
@@ -43,11 +44,11 @@ napi_value GetFrontWindowTitle(napi_env env, napi_callback_info info) {
   }
 
   napi_value out;
-  napi_create_string_utf8(env, result, NAPI_AUTO_LENGTH, &out);
+  fn_napi_create_string_utf8(env, result, strlen(result), &out);
   return out;
 #else
   napi_value out;
-  napi_create_string_utf8(env, "<Unsupported platform>", NAPI_AUTO_LENGTH, &out);
+  fn_napi_create_string_utf8(env, "<Unsupported platform>", strlen("<Unsupported platform>"), &out);
   return out;
 #endif
 }
@@ -61,10 +62,17 @@ napi_value Init(napi_env env, napi_value exports) {
 
 __attribute__((visibility("default")))
 napi_value napi_register_module_v1(napi_env env, napi_value exports) {
+#ifdef _WIN32
+  self_dl = GetModuleHandle(NULL);
+  fn_napi_create_string_utf8 = (void *)GetProcAddress(self_dl, "napi_create_string_utf8");
+  fn_napi_create_function = (void *)GetProcAddress(self_dl, "napi_create_function");
+  fn_napi_set_named_property = (void *)GetProcAddress(self_dl, "napi_set_named_property");
+#else
   self_dl = dlopen(NULL, RTLD_NOW);
   fn_napi_create_string_utf8 = dlsym(self_dl, "napi_create_string_utf8");
   fn_napi_create_function = dlsym(self_dl, "napi_create_function");
   fn_napi_set_named_property = dlsym(self_dl, "napi_set_named_property");
+#endif
 
   return Init(env, exports);
 }

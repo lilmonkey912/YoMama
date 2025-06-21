@@ -29,13 +29,13 @@ build-macos:
 # Windows build (using cross or MSVC)
 build-win:
 	@echo "→ Building for Windows..."
-	mkdir -p build/windows
+	mkdir -p build/win32
 	x86_64-w64-mingw32-gcc \
 		-O2 \
 		-shared \
 		-static-libgcc \
 		-DNAPI_EXPERIMENTAL \
-		frontwindow.c -o build\windows\frontwindow.node \
+		frontwindow.c -o build/win32/frontwindow.node \
 		-Wl,--export-all-symbols \
 		-Wl,--enable-auto-import
 

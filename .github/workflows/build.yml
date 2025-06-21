@@ -61,5 +61,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontwindow-windows
-          path: frontwindow/build/windows/frontwindow.node
+          path: frontwindow/build/win32/frontwindow.node
           retention-days: 30
