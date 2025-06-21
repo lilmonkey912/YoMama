@@ -55,7 +55,7 @@ jobs:
       - name: Build for Windows
         run: |
           cd frontwindow
-          make build-win
+          npx node-gyp configure build
         env:
           NODE_INCLUDE: ${{ env.NODE_INCLUDE }}
 
