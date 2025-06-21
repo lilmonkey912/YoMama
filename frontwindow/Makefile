@@ -34,9 +34,8 @@ build-win:
 		-std=c++17 -O2 -shared -static-libstdc++ -static-libgcc \
 		-I$(NODE_INCLUDE) \
 		$(WIN_SRC) \
-		-o $(OUTPUT) \
-		-Wl,--export-all-symbols \
-		-undefined dynamic_lookup
+		-o build/windows/$(OUTPUT) \
+		-Wl,--export-all-symbols
 
 # Clean
 clean:
