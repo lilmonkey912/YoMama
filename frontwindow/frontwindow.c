@@ -18,7 +18,7 @@ napi_value GetFrontWindowTitle(napi_env env, napi_callback_info info) {
   napi_create_string_utf8(env, title, NAPI_AUTO_LENGTH, &out);
   free((void *)title);
   return out;
-#else
+#elif defined(_WIN32)
   char result[512] = "<Unsupported platform>";
 
   HWND hwnd = GetForegroundWindow();
@@ -32,6 +32,10 @@ napi_value GetFrontWindowTitle(napi_env env, napi_callback_info info) {
 
   napi_value out;
   napi_create_string_utf8(env, result, NAPI_AUTO_LENGTH, &out);
+  return out;
+#else
+  napi_value out;
+  napi_create_string_utf8(env, "<Unsupported platform>", NAPI_AUTO_LENGTH, &out);
   return out;
 #endif
 }

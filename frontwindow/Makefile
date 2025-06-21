@@ -26,6 +26,21 @@ build-macos:
 		$(SRC) $(MAC_SRC) -o build/darwin/$(OUTPUT) \
 		-undefined dynamic_lookup
 
+# Windows build (using cross-compilation)
+build-win:
+	@echo "→ Building for Windows..."
+	mkdir -p build/windows
+	x86_64-w64-mingw32-gcc \
+		-O2 \
+		-shared \
+		-static-libgcc \
+		-DNAPI_EXPERIMENTAL \
+		-I$(NODE_INCLUDE) \
+		$(WIN_SRC) -o build/windows/$(OUTPUT) \
+		-Wl,--export-all-symbols \
+		-Wl,--enable-auto-import \
+		-Wl,--unresolved-symbols=ignore-all
+
 # Clean
 clean:
 	@echo "→ Cleaning..."
