@@ -11,6 +11,8 @@ import cv2
 import json
 from deepface import DeepFace
 from ultralytics import YOLO
+from gazetracking.gaze_tracking import GazeTracking
+
 
 app = Flask(__name__)
 CORS(app)
@@ -48,10 +50,20 @@ def analyze():
         face_result = DeepFace.analyze(img, actions=['emotion'], enforce_detection=False)
         emotion = face_result[0]['dominant_emotion']
 
+        # eye tracking feature with GazeTracking
+        gaze = GazeTracking()
+        gaze.refresh(img)
+        eye_centre = gaze.is_center()
+        eye_closed = gaze.is_blinking()
+        eye_centre = False
+        if not eye_closed:
+            eye_centre = gaze.is_center()
         # Return Json results
         return jsonify({
             "has_phone": has_phone,
-            "emotion": emotion
+            "emotion": emotion,
+            "eye_centre": eye_centre,
+            "eye_closed": eye_closed
         })
 
     except Exception as e:

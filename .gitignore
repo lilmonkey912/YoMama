@@ -3,7 +3,6 @@ __pycache__/
 env/
 deepenv/
 *.pt
-*.jpg
 *.jpeg
 *.png
 .DS_Store

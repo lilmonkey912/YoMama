@@ -13,7 +13,7 @@ import requests
 import json
 
 # Base64 encoded
-with open("chlophone.jpeg", "rb") as image_file:
+with open("jinphone.jpeg", "rb") as image_file:
     img_bytes = image_file.read()
 
 # send POST request to flask server
