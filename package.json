@@ -1,0 +1,37 @@
+{
+  "name": "yomama",
+  "version": "1.0.0",
+  "description": "",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"npm:dev:main\"",
+    "dev:main": "tsc --watch",
+    "build": "tsc && vite build",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lilmonkey912/YoMama.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lilmonkey912/YoMama/issues"
+  },
+  "homepage": "https://github.com/lilmonkey912/YoMama#readme",
+  "dependencies": {
+    "electron": "^36.5.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.3",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}
