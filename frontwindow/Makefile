@@ -30,7 +30,13 @@ build-macos:
 build-win:
 	@echo "→ Building for Windows..."
 	mkdir -p build/windows
-	cl.exe /LD /EHsc /DNAPI_EXPERIMENTAL /I "%NODE_INCLUDE%" $(WIN_SRC) /link /DEF:frontwindow.def /OUT:build/windows/$(OUTPUT)
+	x86_64-w64-mingw32-g++ \
+		-std=c++17 -O2 -shared -static-libstdc++ -static-libgcc \
+		-I$(NODE_INCLUDE) \
+		$(WIN_SRC) \
+		-o $(OUTPUT) \
+		-Wl,--export-all-symbols \
+		-undefined dynamic_lookup
 
 # Clean
 clean:
