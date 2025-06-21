@@ -35,11 +35,10 @@ build-win:
 		-shared \
 		-static-libgcc \
 		-DNAPI_EXPERIMENTAL \
-		-I path\to\node\include \
-		frontwindow.c -o build\win32\frontwindow.node \
+		frontwindow.c -o build\windows\frontwindow.node \
 		-Wl,--export-all-symbols \
 		-Wl,--enable-auto-import \
-		-Wl,--out-implib,build\win32\libfrontwindow.a
+		-Wl,--out-implib,build\windows\libfrontwindow.a
 
 # Clean
 clean:
