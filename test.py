@@ -10,20 +10,16 @@
 #print("Result:", result[0]["dominant_emotion"])
 
 import requests
-import base64
 import json
 
 # Base64 encoded
-with open("testing.jpeg", "rb") as image_file:
-    img_b64 = base64.b64encode(image_file.read()).decode('utf-8')
-
-# request
-payload = json.dumps({
-    "image": img_b64
-})
+with open("chlophone.jpeg", "rb") as image_file:
+    img_bytes = image_file.read()
 
 # send POST request to flask server
-response = requests.post("http://127.0.0.1:5000/analyze", data=payload, headers={"Content-Type": "application/json"})
+response = requests.post("http://127.0.0.1:5000/analyze", 
+                         data=img_bytes, 
+                         headers={"Content-Type": "image/jpeg"})
 
 # print result
 print(response.json())

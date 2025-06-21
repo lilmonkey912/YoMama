@@ -22,10 +22,8 @@ yolo_model = YOLO("yolov8n.pt")
 @app.route('/analyze', methods=['POST'])
 def analyze():
     try:
-        # read base 64 encoded image
-        data = request.get_json()
-        img_b64 = data['image']
-        img_bytes = base64.b64decode(img_b64)
+        # read binary  image
+        img_bytes = request.data
         nparr = np.frombuffer(img_bytes, np.uint8)
         img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
@@ -35,9 +33,16 @@ def analyze():
         for box in results[0].boxes:
             cls_id = int(box.cls[0])
             label = results[0].names[cls_id]
-            if label in ['cell phone', 'mobile phone', 'phone']:
+            print (label)
+            if label in ['cell phone', 'remote', 'teddy bear', 'donut', 'toilet']:
                 has_phone = True
                 break
+            # Draw boxes on the image
+            annotated_frame = results[0].plot()
+            cv2.imwrite("output.jpg", annotated_frame)  # Optional: Save to disk
+          #  cv2.imshow("YOLO Detection", annotated_frame)
+          #  cv2.waitKey(0)
+          #  cv2.destroyAllWindows()
 
         # facial expression detection with DeepFace
         face_result = DeepFace.analyze(img, actions=['emotion'], enforce_detection=False)
