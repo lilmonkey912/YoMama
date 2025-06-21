@@ -55,9 +55,7 @@ jobs:
       - name: Build for Windows
         run: |
           cd frontwindow
-          npx node-gyp configure build
-        env:
-          NODE_INCLUDE: ${{ env.NODE_INCLUDE }}
+          make build-win
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4

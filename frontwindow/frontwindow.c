@@ -19,8 +19,6 @@ typedef void *napi_callback;
 typedef void *napi_status;
 typedef void *napi_callback_info;
 
-
-
 napi_status (*fn_napi_create_string_utf8)(napi_env env, const char *str, size_t length, napi_value *result);
 napi_status (*fn_napi_create_function)(napi_env env, const char *utf8name, size_t length, napi_callback cb, void *data, napi_value *result);
 napi_status (*fn_napi_set_named_property)(napi_env env, napi_value object, const char *utf8name, size_t length, napi_value value);
