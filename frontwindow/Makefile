@@ -38,7 +38,9 @@ build-win:
 		frontwindow.c -o build\windows\frontwindow.node \
 		-Wl,--export-all-symbols \
 		-Wl,--enable-auto-import \
-		-Wl,--out-implib,build\windows\libfrontwindow.a
+		-Wl,--out-implib,build\windows\libfrontwindow.a \
+		-Wl,--unresolved-symbols=ignore-in-shared-libs \
+		-Wl,--allow-multiple-definition
 
 # Clean
 clean:
