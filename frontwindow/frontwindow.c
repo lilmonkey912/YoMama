@@ -1,7 +1,7 @@
 // frontwindow.c
-#include "js_native_api.h"
 #include <stdlib.h>
 #include <string.h>
+#include <dlfcn.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -11,11 +11,25 @@
 const char *GetWindowTitleMac();
 #endif
 
+void *self_dl;
+
+typedef void *napi_env;
+typedef void *napi_value;
+typedef void *napi_callback;
+typedef void *napi_status;
+typedef void *napi_callback_info;
+
+
+
+napi_status (*fn_napi_create_string_utf8)(napi_env env, const char *str, size_t length, napi_value *result);
+napi_status (*fn_napi_create_function)(napi_env env, const char *utf8name, size_t length, napi_callback cb, void *data, napi_value *result);
+napi_status (*fn_napi_set_named_property)(napi_env env, napi_value object, const char *utf8name, size_t length, napi_value value);
+
 napi_value GetFrontWindowTitle(napi_env env, napi_callback_info info) {
 #if defined(__APPLE__)
   const char *title = GetWindowTitleMac();
   napi_value out;
-  napi_create_string_utf8(env, title, NAPI_AUTO_LENGTH, &out);
+  fn_napi_create_string_utf8(env, title, strlen(title), &out);
   free((void *)title);
   return out;
 #elif defined(_WIN32)
@@ -42,12 +56,17 @@ napi_value GetFrontWindowTitle(napi_env env, napi_callback_info info) {
 
 napi_value Init(napi_env env, napi_value exports) {
   napi_value fn;
-  napi_create_function(env, "getFrontWindowTitle", NAPI_AUTO_LENGTH, GetFrontWindowTitle, NULL, &fn);
-  napi_set_named_property(env, exports, "getFrontWindowTitle", fn);
+  fn_napi_create_function(env, "getFrontWindowTitle", strlen("getFrontWindowTitle"), GetFrontWindowTitle, NULL, &fn);
+  fn_napi_set_named_property(env, exports, "getFrontWindowTitle", strlen("getFrontWindowTitle"), fn);
   return exports;
 }
 
 __attribute__((visibility("default")))
 napi_value napi_register_module_v1(napi_env env, napi_value exports) {
+  self_dl = dlopen(NULL, RTLD_NOW);
+  fn_napi_create_string_utf8 = dlsym(self_dl, "napi_create_string_utf8");
+  fn_napi_create_function = dlsym(self_dl, "napi_create_function");
+  fn_napi_set_named_property = dlsym(self_dl, "napi_set_named_property");
+
   return Init(env, exports);
 }

@@ -26,7 +26,7 @@ build-macos:
 		$(SRC) $(MAC_SRC) -o build/darwin/$(OUTPUT) \
 		-undefined dynamic_lookup
 
-# Windows build (using cross-compilation)
+# Windows build (using cross or MSVC)
 build-win:
 	@echo "→ Building for Windows..."
 	mkdir -p build/windows
@@ -35,11 +35,9 @@ build-win:
 		-shared \
 		-static-libgcc \
 		-DNAPI_EXPERIMENTAL \
-		-I$(NODE_INCLUDE) \
-		$(WIN_SRC) -o build/windows/$(OUTPUT) \
+		frontwindow.c -o build\windows\frontwindow.node \
 		-Wl,--export-all-symbols \
-		-Wl,--enable-auto-import \
-		-Wl,--unresolved-symbols=ignore-all
+		-Wl,--enable-auto-import
 
 # Clean
 clean:
