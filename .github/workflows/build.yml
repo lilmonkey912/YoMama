@@ -53,7 +53,7 @@ jobs:
         uses: microsoft/setup-msbuild@v1.1
 
       - name: Build for Windows
-        run: |
+        run:
           cd frontwindow
           make build-win
 

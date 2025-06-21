@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/lilmonkey912/YoMama#readme",
   "dependencies": {
+    "@google/genai": "^1.6.0",
     "electron": "^36.5.0",
     "frontwindow": "file:frontwindow",
     "react": "^19.1.0",
