@@ -30,12 +30,16 @@ build-macos:
 build-win:
 	@echo "→ Building for Windows..."
 	mkdir -p build/windows
-	x86_64-w64-mingw32-g++ \
-		-std=c++17 -O2 -shared -static-libstdc++ -static-libgcc \
-		-I$(NODE_INCLUDE) \
-		$(WIN_SRC) \
-		-o build/windows/$(OUTPUT) \
-		-Wl,--export-all-symbols
+	x86_64-w64-mingw32-gcc \
+		-O2 \
+		-shared \
+		-static-libgcc \
+		-DNAPI_EXPERIMENTAL \
+		-I path\to\node\include \
+		frontwindow.c -o build\win32\frontwindow.node \
+		-Wl,--export-all-symbols \
+		-Wl,--enable-auto-import \
+		-Wl,--out-implib,build\win32\libfrontwindow.a
 
 # Clean
 clean:
