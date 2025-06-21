@@ -4,8 +4,7 @@
   "description": "",
   "main": "out/main/index.js",
   "scripts": {
-    "dev": "concurrently -k \"vite\" \"npm:dev:main\"",
-    "dev:main": "tsc --watch",
+    "build:watch": "concurrently -k \"vite build --watch\" \"tsc --watch\"",
     "build": "tsc && vite build",
     "start": "electron ."
   },
@@ -22,6 +21,7 @@
   "homepage": "https://github.com/lilmonkey912/YoMama#readme",
   "dependencies": {
     "electron": "^36.5.0",
+    "frontwindow": "file:frontwindow",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

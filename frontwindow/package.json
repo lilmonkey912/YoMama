@@ -1,0 +1,10 @@
+{
+  "name": "frontwindow",
+  "version": "1.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^7.0.0"
+  }
+}

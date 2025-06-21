@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
+import { getFrontWindowTitle } from "frontwindow";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -7,6 +8,7 @@ function createWindow() {
     height: 600,
     webPreferences: {
       contextIsolation: true,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
@@ -16,5 +18,7 @@ function createWindow() {
     win.loadFile(path.join(__dirname, "../renderer/index.html"));
   }
 }
+
+ipcMain.handle("get-foremost-window-title", getFrontWindowTitle);
 
 app.whenReady().then(createWindow);
