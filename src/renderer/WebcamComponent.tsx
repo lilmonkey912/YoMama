@@ -133,7 +133,7 @@ const WebcamComponent: React.FC<WebcamComponentProps> = ({
             borderRadius: "8px",
             backgroundColor: "#000",
             transform: "scaleX(-1)",
-            // display: "none",
+            display: "none",
           }}
           muted
           playsInline

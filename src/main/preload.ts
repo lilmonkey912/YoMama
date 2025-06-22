@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer } from "electron";
-import type { VisionModelResponse } from "./vision_model";
 
 contextBridge.exposeInMainWorld("electronAPI", {
   onYell: (callback: (text: string, audio: ArrayBuffer) => void) => {
@@ -9,6 +8,9 @@ contextBridge.exposeInMainWorld("electronAPI", {
   },
   sendWebcamFrame: (frame: ArrayBuffer, width: number, height: number) => {
     ipcRenderer.send("webcam-frame", frame, width, height);
+  },
+  dismiss: () => {
+    ipcRenderer.send("dismiss");
   },
 });
 
@@ -21,6 +23,7 @@ declare global {
         width: number,
         height: number,
       ) => void;
+      dismiss: () => void;
     };
   }
 }

@@ -34,6 +34,10 @@ export class YellEngine {
 
     this.intervalId = setInterval(() => {
       const title = getFrontWindowTitle();
+      if (title.includes("YoMama")) {
+        return;
+      }
+
       if (title !== this.lastWindowTitle) {
         const old = this.lastWindowTitle;
         this.lastWindowTitle = title;
@@ -155,9 +159,9 @@ export class YellEngine {
 
     const audio = await generateYellVoice(text!);
 
-    console.log("audio", audio);
+    // console.log("audio", audio);
 
-    writeFileSync("audio.pcm", audio);
+    // writeFileSync("audio.pcm", audio);
 
     this.browserWindow.maximize();
 
