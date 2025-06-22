@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { getFrontWindowTitle } from "frontwindow";
 import { generateYellText } from "./genai";
+import "./vision_model";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -11,17 +12,22 @@ function createWindow() {
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
     },
-    frame: false,
-    titleBarStyle: "hidden",
-    center: true,
-    alwaysOnTop: true,
-    hasShadow: false,
-    roundedCorners: false,
-    transparent: true,
-    fullscreen: true,
-    simpleFullscreen: true,
-    focusable: false,
+    // frame: false,
+    // titleBarStyle: "hidden",
+    // center: true,
+    // alwaysOnTop: true,
+    // hasShadow: false,
+    // roundedCorners: false,
+    // transparent: true,
+    // fullscreen: true,
+    // simpleFullscreen: true,
+    // focusable: false,
+    // icon: path.join(__dirname, "../../assets/icon.png"),
   });
+
+  if (process.platform === "darwin") {
+    app.dock?.setIcon(path.join(__dirname, "../../assets/icon.png"));
+  }
 
   setInterval(() => {
     const title = getFrontWindowTitle();

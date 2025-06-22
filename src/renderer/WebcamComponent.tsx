@@ -17,7 +17,7 @@ const WebcamComponent: React.FC<WebcamComponentProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const [isStreaming, setIsStreaming] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const startStream = async () => {
@@ -70,7 +70,9 @@ const WebcamComponent: React.FC<WebcamComponentProps> = ({
   };
 
   const captureFrames = () => {
-    if (!videoRef.current || !canvasRef.current || !isStreaming) return;
+    if (!videoRef.current || !canvasRef.current || !isStreaming) {
+      return console.log("Not streaming", videoRef, canvasRef, isStreaming);
+    }
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -131,7 +133,7 @@ const WebcamComponent: React.FC<WebcamComponentProps> = ({
             borderRadius: "8px",
             backgroundColor: "#000",
             transform: "scaleX(-1)",
-            display: "none",
+            // display: "none",
           }}
           muted
           playsInline

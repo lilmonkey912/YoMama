@@ -12,7 +12,7 @@ import json
 from deepface import DeepFace
 from ultralytics import YOLO
 from gazetracking.gaze_tracking import GazeTracking
-
+ 
 
 app = Flask(__name__)
 CORS(app)

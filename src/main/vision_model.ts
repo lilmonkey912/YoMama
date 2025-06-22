@@ -1,4 +1,6 @@
-const API_BASE = "http://localhost:8080";
+import { ipcMain } from "electron";
+
+const API_BASE = "http://localhost:5000";
 
 export interface VisionModelResponse {
   has_phone: boolean;
@@ -18,3 +20,7 @@ export function inferVisionModel(
     },
   }).then((res) => res.json());
 }
+
+ipcMain.handle("analyze-image", async (_event, image: ArrayBuffer) => {
+  return inferVisionModel(image);
+});

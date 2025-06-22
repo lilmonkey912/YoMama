@@ -9,6 +9,5 @@ __pycache__/
 env/
 deepenv/
 *.pt
-*.jpeg
-*.png
 .DS_Store
+venv/
