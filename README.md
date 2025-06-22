@@ -37,7 +37,8 @@ Using real-time webcam ML, window tracking, and Gemini API sass — YoMama makes
 - React
 - Electron
 - Python (Flask)
-- C (hardware support)
+- C (desktop control)
+- Machine Learning 
 - CSS/HTML
 
 **Libraries & APIs:**
