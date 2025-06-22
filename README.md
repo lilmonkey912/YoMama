@@ -44,7 +44,7 @@ Using real-time webcam ML, window tracking, and Gemini API sass — YoMama makes
 - Google Gemini API (text generation)
 - Custom Machine Learning Models (phone, face, eye, emotion detection)
 - Real-time image analysis (Webcam feed to Flask backend)
-- Audio synthesis for TTS
+- Audio synthesis for Gemini TTS
 - Electron preload bridge for system info
 
 ---
