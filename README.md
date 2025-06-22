@@ -3,7 +3,7 @@
 **Hackathon Submission – SpurHacks 2025**
 
 **Demo Video:** [Link Coming Soon]  
-**Team Members:** Chloe Zheng, DJ, Adila, Jin
+**Team Members:**  DJ, Chloe, Adila, Jin
 
 ---
 
@@ -61,3 +61,35 @@ Using real-time webcam ML, window tracking, and Gemini API sass — YoMama makes
 
 ```bash
 git clone https://github.com/yourteam/yomama.git
+```
+2. Install backend dependencies:
+```bash
+cd server
+pip install -r requirements.txt
+python app.py
+```
+3. Install frontend (Electron React) dependencies:
+```bash
+cd ../client
+npm install
+npm run start
+```
+##  Opportunity
+
+LLMs and productivity AI tools are booming, but most are too polite or passive.
+**YoMama** fills that gap by offering an agentic, emotionally expressive AI that adapts to your behavior, with real consequences (popups, sound, and social shame).
+
+Think: your mom yelling at you, but with generative sass and ML-powered presence detection.
+
+## Future Integration
+Fine-tuned **Gemini agent memory** for long-term study session tracking
+**“YoMama Leaderboard” **for public shaming among friends
+Chrome extension + system-wide monitoring
+IRL version: Raspberry Pi **camera and speaker **for real-life tracking
+
+## 🤝 Team
+- **DJ** - Electron / Systems / Window + Camera tracking
+- **Adila** - UI Design / Branding / Frontend polish
+- **Jin** - Frontend Logic / Animation / Popups
+- **Chloe** - Backend / ML integration / Vision models
+
