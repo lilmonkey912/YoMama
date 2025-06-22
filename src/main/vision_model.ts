@@ -1,4 +1,7 @@
-const API_BASE = "http://localhost:8080";
+import { ipcMain } from "electron";
+import jpeg from "@jimp/jpeg";
+
+const API_BASE = "http://127.0.0.1:5000";
 
 export interface VisionModelResponse {
   has_phone: boolean;
@@ -18,3 +21,14 @@ export function inferVisionModel(
     },
   }).then((res) => res.json());
 }
+
+ipcMain.handle(
+  "analyze-image",
+  async (_event, width: number, height: number, image: ArrayBuffer) => {
+    return await inferVisionModel(
+      jpeg().encoders["image/jpeg"]({
+        bitmap: { data: Buffer.from(image), width, height },
+      }),
+    );
+  },
+);

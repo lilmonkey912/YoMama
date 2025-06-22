@@ -9,7 +9,11 @@ __pycache__/
 env/
 deepenv/
 *.pt
-*.jpeg
-*.png
 .DS_Store
+venv/
 yell.wav
+venv/
+g.sh
+*.pcm
+*.wav
+output.jpg
