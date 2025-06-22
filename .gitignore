@@ -13,3 +13,7 @@ deepenv/
 venv/
 yell.wav
 venv/
+g.sh
+*.pcm
+*.wav
+output.jpg

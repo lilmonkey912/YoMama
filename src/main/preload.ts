@@ -8,8 +8,8 @@ contextBridge.exposeInMainWorld("electronAPI", {
     });
   },
   getForemostWindowTitle: () => ipcRenderer.invoke("get-foremost-window-title"),
-  analyzeImage: (image: ArrayBuffer) =>
-    ipcRenderer.invoke("analyze-image", image),
+  analyzeImage: (width: number, height: number, image: ArrayBuffer) =>
+    ipcRenderer.invoke("analyze-image", width, height, image),
 });
 
 declare global {
@@ -17,7 +17,11 @@ declare global {
     electronAPI: {
       onForemostWindowTitleChange: (callback: (title: string) => void) => void;
       getForemostWindowTitle: () => Promise<string>;
-      analyzeImage: (image: ArrayBuffer) => Promise<VisionModelResponse>;
+      analyzeImage: (
+        width: number,
+        height: number,
+        image: ArrayBuffer,
+      ) => Promise<VisionModelResponse>;
     };
   }
 }

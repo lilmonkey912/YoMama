@@ -13,6 +13,7 @@ from deepface import DeepFace
 from ultralytics import YOLO
 from gazetracking.gaze_tracking import GazeTracking
  
+import traceback
 
 app = Flask(__name__)
 CORS(app)
@@ -41,10 +42,8 @@ def analyze():
                 break
             # Draw boxes on the image
             annotated_frame = results[0].plot()
-            cv2.imwrite("output.jpg", annotated_frame)  # Optional: Save to disk
-          #  cv2.imshow("YOLO Detection", annotated_frame)
-          #  cv2.waitKey(0)
-          #  cv2.destroyAllWindows()
+            # DEBUG
+            # cv2.imwrite("output.jpg", annotated_frame)
 
         # facial expression detection with DeepFace
         face_result = DeepFace.analyze(img, actions=['emotion'], enforce_detection=False)
@@ -67,7 +66,7 @@ def analyze():
         })
 
     except Exception as e:
-        return jsonify({"error": str(e)})
+        return jsonify({"error": traceback.format_exc()})
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
