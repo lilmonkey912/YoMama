@@ -10,6 +10,10 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getForemostWindowTitle: () => ipcRenderer.invoke("get-foremost-window-title"),
   analyzeImage: (width: number, height: number, image: ArrayBuffer) =>
     ipcRenderer.invoke("analyze-image", width, height, image),
+  generateYellText: (message: string, image?: ArrayBuffer) =>
+    ipcRenderer.invoke("generate-yell-text", message, image),
+  generateYellAudio: (message: string) =>
+    ipcRenderer.invoke("generate-yell-audio", message),
 });
 
 declare global {
@@ -22,6 +26,14 @@ declare global {
         height: number,
         image: ArrayBuffer,
       ) => Promise<VisionModelResponse>;
+<<<<<<< HEAD
+=======
+      generateYellText: (
+        message: string,
+        image?: ArrayBuffer,
+      ) => Promise<string>;
+      generateYellAudio: (message: string) => Promise<ArrayBuffer>;
+>>>>>>> 4d249e1f (x)
     };
   }
 }
