@@ -3,3 +3,12 @@ out/
 package-lock.json
 .vscode/
 secrets.json
+
+__pycache__/
+*.pyc
+env/
+deepenv/
+*.pt
+*.jpeg
+*.png
+.DS_Store
