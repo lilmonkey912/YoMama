@@ -11,6 +11,20 @@ const imageGroups = [
   ["9.png", "10.png"],
 ];
 
+function playPCMBuffer(buffer: ArrayBuffer) {
+  const audioContext = new AudioContext();
+  const source = audioContext.createBufferSource();
+  const bufferSource = audioContext.createBufferSource();
+  bufferSource.buffer = new AudioBuffer({
+    sampleRate: audioContext.sampleRate,
+    numberOfChannels: 1,
+    length: buffer.byteLength / 2,
+  });
+  bufferSource.buffer.copyToChannel(new Float32Array(buffer), 0);
+  bufferSource.connect(audioContext.destination);
+  bufferSource.start();
+}
+
 const App = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [meanLevel, setMeanLevel] = useState(3);
@@ -53,6 +67,7 @@ const App = () => {
   window.electronAPI.onYell((text, audio) => {
     setMessage(text);
     triggerMessage();
+    playPCMBuffer(audio);
   });
 
   return (
