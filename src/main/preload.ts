@@ -2,35 +2,25 @@ import { contextBridge, ipcRenderer } from "electron";
 import type { VisionModelResponse } from "./vision_model";
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  onForemostWindowTitleChange: (callback: (title: string) => void) => {
-    ipcRenderer.on("foremost-window-title", (event, title) => {
-      callback(title);
+  onYell: (callback: (text: string, audio: ArrayBuffer) => void) => {
+    ipcRenderer.on("yell", (event, data) => {
+      callback(data.text, data.audio);
     });
   },
-  getForemostWindowTitle: () => ipcRenderer.invoke("get-foremost-window-title"),
-  analyzeImage: (width: number, height: number, image: ArrayBuffer) =>
-    ipcRenderer.invoke("analyze-image", width, height, image),
-  generateYellText: (message: string, image?: ArrayBuffer) =>
-    ipcRenderer.invoke("generate-yell-text", message, image),
-  generateYellAudio: (message: string) =>
-    ipcRenderer.invoke("generate-yell-audio", message),
+  sendWebcamFrame: (frame: ArrayBuffer, width: number, height: number) => {
+    ipcRenderer.send("webcam-frame", frame, width, height);
+  },
 });
 
 declare global {
   interface Window {
     electronAPI: {
-      onForemostWindowTitleChange: (callback: (title: string) => void) => void;
-      getForemostWindowTitle: () => Promise<string>;
-      analyzeImage: (
+      onYell: (callback: (text: string, audio: ArrayBuffer) => void) => void;
+      sendWebcamFrame: (
+        frame: ArrayBuffer,
         width: number,
         height: number,
-        image: ArrayBuffer,
-      ) => Promise<VisionModelResponse>;
-      generateYellText: (
-        message: string,
-        image?: ArrayBuffer,
-      ) => Promise<string>;
-      generateYellAudio: (message: string) => Promise<ArrayBuffer>;
+      ) => void;
     };
   }
 }

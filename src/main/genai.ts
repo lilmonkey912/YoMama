@@ -1,9 +1,6 @@
 import { GoogleGenAI, Part } from "@google/genai";
-import { ipcMain } from "electron";
 import { readFileSync } from "fs";
 import path from "path";
-// @ts-ignore
-import wav from 'wav';
 
 const secrets: {
   GEMINI_API_KEY: string;
@@ -15,9 +12,24 @@ export const genai = new GoogleGenAI({
   apiKey: secrets.GEMINI_API_KEY,
 });
 
+export async function windowTitleRelevant(title: string, oldTitle: string) {
+  const response = await genai.models.generateContent({
+    model: "gemini-2.5-flash-lite-preview-06-17",
+    contents: [{
+      role: "user",
+      parts: [{
+        text:
+          `Is the following window title relevant in a study/work environment? Reply in ABSOLUTELY one word only no matter what, true or false. Be a bit generous. Things like Visual Studio Code or any code editing software are good for example. Like Cursor. Title: ${title}, Old Title: ${oldTitle}`,
+      }],
+    }],
+  });
+
+  return response.text === "true" ? true : false;
+}
+
 export async function generateYellText(prompt: {
   message: string;
-  image?: ArrayBuffer;
+  image?: ArrayBuffer | Buffer;
 }) {
   const parts: Part[] = [];
   if (prompt.image) {
@@ -32,7 +44,7 @@ export async function generateYellText(prompt: {
     text: prompt.message,
   });
   const response = await genai.models.generateContent({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.5-flash-lite-preview-06-17",
     contents: [
       {
         role: "user",
@@ -78,19 +90,6 @@ export async function generateYellVoice(text: string) {
 
   return audioBuffer;
 }
-
-ipcMain.handle("generate-yell-text", async (event, prompt: {
-  message: string;
-  image?: ArrayBuffer;
-}) => {
-  const text = await generateYellText(prompt);
-  return text;
-});
-
-ipcMain.handle("generate-yell-audio", async (event, prompt: string) => {
-  const audio = await generateYellVoice(prompt);
-  return audio;
-});
 
 // test input, should be deleted when connected to the generated prompt
 if (require.main === module) {

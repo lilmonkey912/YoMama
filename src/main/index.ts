@@ -1,13 +1,13 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow } from "electron";
 import path from "path";
-import { getFrontWindowTitle } from "frontwindow";
 import "./genai";
 import "./vision_model";
+import { YellEngine } from "./yell_engine";
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 100,
+    height: 100,
     webPreferences: {
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),
@@ -18,21 +18,17 @@ function createWindow() {
     alwaysOnTop: true,
     hasShadow: false,
     roundedCorners: false,
+    hiddenInMissionControl: true,
     transparent: true,
     focusable: false,
     icon: path.join(__dirname, "../../assets/icon.png"),
   });
 
-  win.maximize();
+  new YellEngine(win);
 
   if (process.platform === "darwin") {
     app.dock?.setIcon(path.join(__dirname, "../../assets/icon.png"));
   }
-
-  setInterval(() => {
-    const title = getFrontWindowTitle();
-    win.webContents.send("foremost-window-title", title);
-  }, 500);
 
   if (process.env.VITE_DEV_SERVER_URL) {
     win.loadURL(process.env.VITE_DEV_SERVER_URL);
@@ -40,7 +36,5 @@ function createWindow() {
     win.loadFile(path.join(__dirname, "../renderer/index.html"));
   }
 }
-
-ipcMain.handle("get-foremost-window-title", getFrontWindowTitle);
 
 app.whenReady().then(createWindow);
