@@ -68,24 +68,34 @@ const LandingPage: React.FC = () => {
     }, 150);
   };
 
+  const [message, setMessage] = useState("YoMama says: Study! (will change to Gemini API)");
+
   const triggerMessage = () => {
-    const msg = 'YoMama says: Study! (will change to Gemini API)';
     flashRedOnce();
     setShowPopup(true);
     if (document.hidden && Notification.permission === 'granted') {
-      new Notification('YoMama says:', { body: msg });
+      new Notification('YoMama says:', { body: message });
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+        setMessage("YoMama says: Study! (changed)");
+        triggerMessage();
+    }, 5000);
+  }, []);
+
   return (
     <div className="background-container">
-      <div className="test-controls">
+      
+      {/* <div className="test-controls">
         <h2>Tab Focus Test</h2>
         <p>Current tab status: {tabFocused ? 'Focused' : 'Hidden (background)'}</p>
         <button onClick={triggerMessage}>Test Message Now</button>
         <button onClick={() => setShowPopup(false)}>Reset</button>
       </div>
-
+       */}
+        
       <div id="upload-circle-container">
         <div id="upload-circle" onClick={() => document.getElementById('upload-input')?.click()}>
           <input
@@ -120,7 +130,7 @@ const LandingPage: React.FC = () => {
         <ChatPopup
           meanLevel={meanLevel}
           imageGroups={imageGroups}
-          message="YoMama says: Study! (will change to Gemini API)"
+          message={message}
           onClose={() => setShowPopup(false)}
         />
       )}

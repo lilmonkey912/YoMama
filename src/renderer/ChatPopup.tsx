@@ -24,8 +24,7 @@ useEffect(() => {
 
   const type = () => {
     if (i < message.length) {
-      setChatMsg((prev) => prev + message[i]);
-      i++;
+      setChatMsg((prev) => prev + (message[i++] || ""));
       setTimeout(type, 50);
     }
   };
