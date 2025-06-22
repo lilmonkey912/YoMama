@@ -26,14 +26,11 @@ declare global {
         height: number,
         image: ArrayBuffer,
       ) => Promise<VisionModelResponse>;
-<<<<<<< HEAD
-=======
       generateYellText: (
         message: string,
         image?: ArrayBuffer,
       ) => Promise<string>;
       generateYellAudio: (message: string) => Promise<ArrayBuffer>;
->>>>>>> 4d249e1f (x)
     };
   }
 }
