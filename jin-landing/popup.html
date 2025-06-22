@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YoMama Popup</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    #chat-box {
+      width: 400px;
+      height: 120px;
+      background-color: #b8d4f0;
+      border-radius: 20px;
+      position: relative;
+      padding: 60px 20px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    #circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #chat-msg {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div id="chat-box">
+    <div id="circle"></div>
+    <p id="chat-msg"></p>
+  </div>
+
+  <script>
+    let img1 = "";
+    let img2 = "";
+    let index = 0;
+    let interval;
+
+    function updateImages(new1, new2) {
+      img1 = new1;
+      img2 = new2;
+      index = 0; // Reset animation cycle
+    }
+
+    function animateCircle() {
+      const circle = document.getElementById('circle');
+      if (!circle) return;
+      if (interval) clearInterval(interval);
+      interval = setInterval(() => {
+        circle.style.backgroundImage = 'url(' + (index % 2 === 0 ? img1 : img2) + ')';
+        index++;
+      }, 400);
+    }
+
+    function typeMessage(msg) {
+      const el = document.getElementById("chat-msg");
+      el.textContent = "";
+      let i = 0;
+      function type() {
+        if (i < msg.length) {
+          el.textContent += msg[i++];
+          setTimeout(type, 50);
+        }
+      }
+      type();
+    }
+
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'init') {
+        updateImages(event.data.img1, event.data.img2);
+        typeMessage(event.data.msg);
+        animateCircle();
+      }
+    });
+  </script>
+</body>
+</html>
