@@ -23,6 +23,7 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@google/genai": "^1.6.0",
     "@jimp/jpeg": "^0.22.12",
+    "@speechmatics/web-pcm-player": "^1.0.0",
     "@types/node-webcam": "^0.8.3",
     "electron": "^36.5.0",
     "fluent-ffmpeg": "^2.1.3",

@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer } from "electron";
+import { dataStore } from "./data";
 
 contextBridge.exposeInMainWorld("electronAPI", {
   onYell: (callback: (text: string, audio: ArrayBuffer) => void) => {
@@ -12,6 +13,18 @@ contextBridge.exposeInMainWorld("electronAPI", {
   dismiss: () => {
     ipcRenderer.send("dismiss");
   },
+  setMeanLevel: (meanLevel: number) => {
+    dataStore.setMeanLevelOverride(meanLevel);
+  },
+  getMeanLevel: () => {
+    return dataStore.getMeanLevelOverride();
+  },
+  getProfilePicture: () => {
+    return dataStore.getProfilePicture();
+  },
+  setProfilePicture: (profilePicture: string) => {
+    dataStore.setProfilePicture(profilePicture);
+  },
 });
 
 declare global {
@@ -24,6 +37,10 @@ declare global {
         height: number,
       ) => void;
       dismiss: () => void;
+      setMeanLevel: (meanLevel: number) => void;
+      getMeanLevel: () => number;
+      getProfilePicture: () => string | null;
+      setProfilePicture: (profilePicture: string) => void;
     };
   }
 }

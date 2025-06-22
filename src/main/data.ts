@@ -35,6 +35,19 @@ export class DataStore {
     writeFileSync(p, JSON.stringify(user, null, 2));
   }
 
+  getProfilePicture(): string | null {
+    const p = path.join(BASE_PATH, "profile_picture.png");
+    if (!existsSync(p)) {
+      return null;
+    }
+    return readFileSync(p, "utf8");
+  }
+
+  setProfilePicture(profilePicture: string) {
+    const p = path.join(BASE_PATH, "profile_picture.png");
+    writeFileSync(p, profilePicture);
+  }
+
   getFocusTarget(): string | null {
     const p = path.join(BASE_PATH, "focus_target.json");
     if (!existsSync(p)) {

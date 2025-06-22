@@ -26,8 +26,8 @@ function createLandingWindow() {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 100,
-    height: 100,
+    width: 1,
+    height: 1,
     webPreferences: {
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js"),

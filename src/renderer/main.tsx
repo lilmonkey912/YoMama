@@ -12,15 +12,21 @@ const imageGroups = [
 ];
 
 function playPCMBuffer(buffer: ArrayBuffer) {
+  const s16le = new Int16Array(buffer);
+  const f32le = new Float32Array(s16le.length);
+  for (let i = 0; i < s16le.length; i++) {
+    f32le[i] = s16le[i] / 32768;
+  }
+  const SAMPLE_RATE = 24000;
   const audioContext = new AudioContext();
-  const source = audioContext.createBufferSource();
   const bufferSource = audioContext.createBufferSource();
-  bufferSource.buffer = new AudioBuffer({
-    sampleRate: audioContext.sampleRate,
+  const audioBuffer = new AudioBuffer({
+    sampleRate: SAMPLE_RATE,
     numberOfChannels: 1,
-    length: buffer.byteLength / 2,
+    length: f32le.length,
   });
-  bufferSource.buffer.copyToChannel(new Float32Array(buffer), 0);
+  audioBuffer.copyToChannel(f32le, 0);
+  bufferSource.buffer = audioBuffer;
   bufferSource.connect(audioContext.destination);
   bufferSource.start();
 }

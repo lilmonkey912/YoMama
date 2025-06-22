@@ -159,9 +159,7 @@ export class YellEngine {
 
     const audio = await generateYellVoice(text!);
 
-    // console.log("audio", audio);
-
-    // writeFileSync("audio.pcm", audio);
+    writeFileSync("audio.pcm", audio);
 
     this.browserWindow.maximize();
 
