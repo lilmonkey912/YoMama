@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="play">Play</button>
+    <script>
+        document.getElementById("play").addEventListener("click", () => {
+            fetch("/audio.pcm").then(res => res.arrayBuffer()).then(buffer => {
+            const s16le = new Int16Array(buffer);
+            const SAMPLE_RATE = 24000;
+            const channels = 1;
+            const f32le = new Float32Array(s16le.length);
+            for (let i = 0; i < s16le.length; i++) {
+                f32le[i] = s16le[i] / 32768;
+            }
+
+            const audioContext = new AudioContext();
+            const bufferSource = audioContext.createBufferSource();
+            const audioBuffer = new AudioBuffer({
+                sampleRate: SAMPLE_RATE,
+                numberOfChannels: 1,
+                length: f32le.length,
+            });
+            audioBuffer.copyToChannel(f32le, 0);
+            bufferSource.buffer = audioBuffer;
+            bufferSource.connect(audioContext.destination);
+            bufferSource.start();
+        });
+        });
+    </script>
+</body>
+</html>

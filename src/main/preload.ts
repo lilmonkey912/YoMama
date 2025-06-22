@@ -1,5 +1,4 @@
 import { contextBridge, ipcRenderer } from "electron";
-import { dataStore } from "./data";
 
 contextBridge.exposeInMainWorld("electronAPI", {
   onYell: (callback: (text: string, audio: ArrayBuffer) => void) => {
@@ -14,23 +13,23 @@ contextBridge.exposeInMainWorld("electronAPI", {
     ipcRenderer.send("dismiss");
   },
   setMeanLevel: (meanLevel: number) => {
-    dataStore.setMeanLevelOverride(meanLevel);
+    ipcRenderer.send("set-mean-level", meanLevel);
   },
   getMeanLevel: () => {
-    return dataStore.getMeanLevelOverride();
+    return ipcRenderer.invoke("get-mean-level");
   },
   getProfilePicture: () => {
-    return dataStore.getProfilePicture();
+    return ipcRenderer.invoke("get-profile-picture");
   },
   setProfilePicture: (profilePicture: string) => {
-    dataStore.setProfilePicture(profilePicture);
+    ipcRenderer.send("set-profile-picture", profilePicture);
   },
 });
 
 declare global {
   interface Window {
     electronAPI: {
-      onYell: (callback: (text: string, audio: ArrayBuffer) => void) => void;
+      onYell: (callback: (text: string, audio: Uint8Array) => void) => void;
       sendWebcamFrame: (
         frame: ArrayBuffer,
         width: number,

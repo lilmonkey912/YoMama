@@ -52,7 +52,8 @@ export class YellEngine {
       },
     );
 
-    ipcMain.on("dismiss", () => {
+    ipcMain.on("dismiss", (event) => {
+      console.log("dismiss");
       this.dismiss();
     });
   }
@@ -152,14 +153,14 @@ export class YellEngine {
 
     const text = await generateYellText({
       message,
-      // image: this.lastWebcamFrame ?? undefined,
+      image: this.lastWebcamFrame ?? undefined,
     });
 
     console.log("text", text);
 
     const audio = await generateYellVoice(text!);
 
-    writeFileSync("audio.pcm", audio);
+    // writeFileSync("out/renderer/audio.pcm", audio);
 
     this.browserWindow.maximize();
 

@@ -1,3 +1,4 @@
+import { ipcMain } from "electron";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import path from "path";
 
@@ -36,7 +37,7 @@ export class DataStore {
   }
 
   getProfilePicture(): string | null {
-    const p = path.join(BASE_PATH, "profile_picture.png");
+    const p = path.join(BASE_PATH, "profile_picture.txt");
     if (!existsSync(p)) {
       return null;
     }
@@ -44,7 +45,7 @@ export class DataStore {
   }
 
   setProfilePicture(profilePicture: string) {
-    const p = path.join(BASE_PATH, "profile_picture.png");
+    const p = path.join(BASE_PATH, "profile_picture.txt");
     writeFileSync(p, profilePicture);
   }
 
@@ -119,3 +120,20 @@ export class DataStore {
 }
 
 export const dataStore = new DataStore();
+
+ipcMain.handle("set-mean-level", (event, meanLevel: number) => {
+  dataStore.setMeanLevelOverride(meanLevel);
+});
+
+ipcMain.handle("get-mean-level", (event) => {
+  const override = dataStore.getMeanLevelOverride();
+  return override !== null ? override : dataStore.getMeanLevel();
+});
+
+ipcMain.handle("set-profile-picture", (event, profilePicture: string) => {
+  dataStore.setProfilePicture(profilePicture);
+});
+
+ipcMain.handle("get-profile-picture", (event) => {
+  return dataStore.getProfilePicture();
+});

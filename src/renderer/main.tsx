@@ -11,13 +11,14 @@ const imageGroups = [
   ["9.png", "10.png"],
 ];
 
-function playPCMBuffer(buffer: ArrayBuffer) {
-  const s16le = new Int16Array(buffer);
+function playPCMBuffer(buffer: Uint8Array) {
+  const s16le = new Int16Array(buffer.buffer);
+  const SAMPLE_RATE = 24000;
   const f32le = new Float32Array(s16le.length);
   for (let i = 0; i < s16le.length; i++) {
     f32le[i] = s16le[i] / 32768;
   }
-  const SAMPLE_RATE = 24000;
+
   const audioContext = new AudioContext();
   const bufferSource = audioContext.createBufferSource();
   const audioBuffer = new AudioBuffer({

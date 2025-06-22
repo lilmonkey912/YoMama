@@ -28,6 +28,12 @@ const LandingPage: React.FC = () => {
       const event = { target: slider } as unknown as React.ChangeEvent<
         HTMLInputElement
       >;
+      const meanLevel = window.electronAPI.getMeanLevel();
+      setMeanLevel(meanLevel);
+      const profilePicture = window.electronAPI.getProfilePicture();
+      if (profilePicture) {
+        setImage(profilePicture);
+      }
       handleSliderChange(event);
     }
   }, []);
@@ -38,6 +44,7 @@ const LandingPage: React.FC = () => {
     const reader = new FileReader();
     reader.onload = (event) => {
       setImage(event.target?.result as string);
+      window.electronAPI.setProfilePicture(event.target?.result as string);
     };
     reader.readAsDataURL(file);
   };
@@ -45,6 +52,7 @@ const LandingPage: React.FC = () => {
   const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value);
     setMeanLevel(val);
+    window.electronAPI.setMeanLevel(val);
     const fillPercent = ((val - 1) / 4) * 100;
     const slider = document.getElementById("custom-slider");
     if (slider) {
