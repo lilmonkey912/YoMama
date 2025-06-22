@@ -1,13 +1,8 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { getFrontWindowTitle } from "frontwindow";
-<<<<<<< HEAD
-import { generateYellText } from "./genai";
-import "./vision_model";
-=======
-import "./vision_model";
 import "./genai";
->>>>>>> 4d249e1f (x)
+import "./vision_model";
 
 function createWindow() {
   const win = new BrowserWindow({
