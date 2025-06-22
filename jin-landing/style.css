@@ -1,0 +1,231 @@
+/* Base Styles */
+:root {
+  --primary-color: #4a6fa5;
+  --secondary-color: #7aa3cc;
+  --accent-color: #ff5722;
+  --text-color: #333;
+  --light-bg: #b8d4f0;
+  --shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: var(--text-color);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url('Yo Mama Dashboard.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.content-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Test Controls */
+.test-controls {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  max-width: 300px;
+}
+
+.test-controls button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  margin: 8px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.test-controls button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-1px);
+}
+
+/* Upload Circle */
+#upload-circle-container {
+  position: absolute;
+  top: 47%;
+  left: 38%;
+  transform: translate(-50%, -50%);
+  width: 15vw;
+  height: 15vw;
+  min-width: 255px;
+  min-height: 255px;
+  max-width: 270px;
+  max-height: 270px;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+#upload-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 3px solid var(--primary-color);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+#upload-circle:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+#upload-input {
+  display: none;
+}
+
+#uploaded-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: none;
+}
+
+#upload-placeholder {
+  color: var(--primary-color);
+  font-size: 1.5vw;
+  font-weight: 500;
+  text-align: center;
+  padding: 0 10px;
+}
+
+/* Slider */
+#slider-container {
+  position: absolute;
+  top: 6%;
+  left: 60%;
+  transform: translateX(-50%);
+  width: 15vw;
+  min-width: 150px;
+  max-width: 250px;
+  z-index: 1000;
+}
+
+#custom-slider {
+  width: 70%;
+  height: 10px;
+  background: linear-gradient(to right, #ff0000 0%, #ff0000 calc((var(--value, 3) - 1) * 25%), #ff9999 calc((var(--value, 3) - 1) * 25%), #ff9999 100%);
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+#custom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  background: #ff0000;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+#custom-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  background: #ff0000;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Chat Box */
+#chat-box {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  width: 280px;
+  background-color: var(--light-bg);
+  border: 2px solid var(--secondary-color);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 70px 20px 20px;
+  display: none;
+  z-index: 9999;
+}
+
+#chat-box::before {
+  content: "";
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  border: 2px solid var(--secondary-color);
+  border-radius: 50%;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: var(--shadow);
+}
+
+/* Flash Overlay */
+#flash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: red;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transition: opacity 0.15s ease;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  #upload-placeholder {
+    font-size: 16px;
+  }
+
+  .test-controls {
+    top: 2%;
+    left: 2%;
+    padding: 12px;
+    max-width: 250px;
+  }
+
+  #chat-box {
+    width: 240px;
+    padding: 60px 15px 15px;
+  }
+
+  #chat-box::before {
+    width: 80px;
+    height: 80px;
+    top: -40px;
+  }
+}
