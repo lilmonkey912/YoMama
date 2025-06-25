@@ -2,7 +2,7 @@
 
 **Hackathon Submission – SpurHacks 2025**
 
-**Demo Video:** [Link Coming Soon]  
+**Demo Video:** https://youtu.be/tKK-vSXPB6M?si=0yN4SzywnZ-m126D  
 **Team Members:**  DJ, Chloe, Adila, Jin
 
 ---
